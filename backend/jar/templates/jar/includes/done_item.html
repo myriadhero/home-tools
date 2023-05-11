@@ -1,0 +1,35 @@
+<div class="input-group" id="item-{{ item.id }}">
+    <span class="form-control">
+        {{ item.name }}
+    </span>
+    <span class="form-control">
+        {{ item.done_date|date:"M j, y" }}
+    </span>
+
+    {% comment %} undo button {% endcomment %}
+    <button class="btn btn-outline-warning" 
+    type="button"
+    hx-put="{% url 'jar:item_done' item.id %}"
+    >
+        <i class="fa-solid fa-rotate-left"></i>
+    </button>
+
+    {% comment %} edit button {% endcomment %}
+    <button class="btn btn-outline-warning" 
+    type="button"
+    hx-target="#item-{{ item.id }}"
+    hx-get="{% url 'jar:item_edit' item.id %}"
+    >
+        <i class="fa-solid fa-pencil"></i>
+    </button>
+
+    {% comment %} delete button {% endcomment %}
+    <button class="btn btn-outline-danger" 
+    type="button"
+    hx-target="#item-{{ item.id }}"
+    hx-confirm="Are you sure want to delete '{{ item.name }}'?"
+    hx-delete="{% url 'jar:item_delete' item.id %}"
+    >
+        <i class="fa-solid fa-trash-can"></i>
+    </button>
+</div>

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}{{ current_category.name }} Jar{% endblock title %}
+{% block body %}
+
+<div class="container-sm">
+  <ul class="nav nav-tabs">
+    {% for category in categories %}
+        <li class="nav-item">
+          <a class="nav-link {% if category == current_category %}active{% endif %}" 
+          href="{% if category == current_category %}#{% else %}{{ category.get_absolute_url }}{% endif %}"
+          >
+          {{ category.name}}
+          </a>
+        </li>
+    {% endfor %}
+  </ul>
+
+    {% include 'jar/singleJar.html' with category=current_category %}
+</div>
+
+{% endblock body %}
+
+{% block endscripts %}
+{% endblock endscripts %}

@@ -1,0 +1,96 @@
+<div class=""
+    id="{{category.slug}}-tab-pane"
+    hx-target="#{{category.slug}}-tab-pane"
+    hx-swap="outerHTML"
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+    >
+    <div class="d-grid gap-2 pt-2">
+
+        {% comment %} chosen or choose button {% endcomment %}
+        {% with chosen=category.get_chosen has_jar_items=category.has_jar_items %}
+        
+        {% comment %} category has a chosen item {% endcomment %}
+        {% if chosen %}
+        <button
+        type="button"
+        class="btn btn-primary"
+        hx-put="{% url 'jar:chosen_item_done' category.slug %}"
+        >
+            {{ chosen.name }}
+        </button>
+
+        {% comment %} category doesn't have items to pick {% endcomment %}
+        {% elif not has_jar_items %}
+        <button type="button" class="btn btn-secondary" disabled>
+            Add something {{ category.todo_verb|lower }} first!
+        </button>
+
+        {% comment %} ready to pick something {% endcomment %}
+        {% else %}
+        <button
+        type="button"
+        class="btn btn-success"
+        hx-put="{% url 'jar:item_choose_random' category.slug %}"
+        >
+            Pick from the Jar!
+        </button>
+        {% endif %}
+        {% endwith %}
+        
+        {% comment %} add to jar input {% endcomment %}
+        <form hx-post="{% url 'jar:item_create' category.slug %}">
+            <div class="input-group">
+                <input type="text" 
+                class="form-control" 
+                placeholder="Add something {{ category.todo_verb|lower }}!" 
+                aria-label="Add something {{ category.todo_verb|lower }}!" 
+                aria-describedby="{{category.slug}}-add-new"
+                name="name"
+                >
+                <button id="{{category.slug}}-add-new" class="btn btn-outline-success" type="submit"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </form>
+        
+        <div class="accordion" id="{{ category.slug }}-accordion">
+            {% comment %} jar todo list {% endcomment %}
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ category.slug }}-collapse-todo" aria-expanded="true" aria-controls="{{ category.slug }}-collapse-todo">
+                  {{ category.todo_verb }}
+                </button>
+              </h2>
+              <div id="{{ category.slug }}-collapse-todo" class="accordion-collapse collapse" data-bs-parent="#{{ category.slug }}-accordion">
+                <div class="gap-1 d-grid p-2">
+                  
+                {% for item in category.get_todo %}
+                    {% include "jar/includes/todo_item.html" %}
+                {% empty %}
+                <div>Add something {{ category.todo_verb|lower }}!</div>
+                {% endfor %}
+    
+                </div>
+              </div>
+            </div>
+            
+            {% comment %} jar done list {% endcomment %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ category.slug }}-collapse-done" aria-expanded="false" aria-controls="{{ category.slug }}-collapse-done">
+                    {{ category.done_verb }}
+                  </button>
+                </h2>
+                <div id="{{ category.slug }}-collapse-done" class="accordion-collapse collapse" data-bs-parent="#{{ category.slug }}-accordion">
+                  <div class="gap-1 d-grid p-2">                 
+                    
+                    {% for item in category.get_done%}
+                        {% include 'jar/includes/done_item.html' %}
+                    {% empty %}
+                    <div>Get something {{ category.done_verb|lower }}!</div>
+                    {% endfor %}
+    
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

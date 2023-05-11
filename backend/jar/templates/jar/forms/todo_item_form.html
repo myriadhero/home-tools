@@ -1,0 +1,29 @@
+<form 
+hx-patch="{% url 'jar:item_edit' item.id %}"
+hx-target="this"
+>
+    {% csrf_token %}
+    <div class="input-group">
+        <input type="text" 
+        class="form-control" 
+        aria-label="Edit {{ item.name }}!"
+        name="name"
+        value="{{ item.name }}"
+        >
+
+        {% comment %} cancel button {% endcomment %}
+        <button class="btn btn-outline-warning" 
+        type="button"
+        hx-get="{% url 'jar:item_get' item.id %}"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        {% comment %} edit {% endcomment %}
+        <button class="btn btn-outline-success" 
+        type="submit"
+        >
+            <i class="fa-solid fa-check"></i>
+        </button>
+    </div>
+</form>
