@@ -51,7 +51,7 @@ Run:
 - `docker compose build`
 - `docker compose up -d`
   - Currently, Django uses SQLite from the `/backend` directory, you'll likely need to create first by running pipenv commands in the prereqs above
-- `docker compose exec web python manage.py collectstatic`
+- `docker compose exec web python manage.py collectstatic --noinput --clear`
 
 Navigate to http://localhost:8000/jar
 
