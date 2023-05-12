@@ -3,3 +3,5 @@ Pipfile.lock
 .vscode
 *.pyc
 raw-data*.json
+.env
+.env.*
