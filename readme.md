@@ -37,7 +37,7 @@ DOCKER_CODE_DIR="/user/src/django_server"
 DOCKER_WORLD_PORT=8000
 ```
 
-Create `.env.django` file in the root folder with the following:
+Create `.env.django_prod` file in the root folder with the following:
 
 ```
 DJANGO_ALLOWED_HOSTS="localhost,yoursite.com"
