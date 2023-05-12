@@ -36,7 +36,7 @@ ALLOWED_HOSTS = os.environ.get(
 # https://docs.djangoproject.com/en/4.2/releases/4.0/#csrf-trusted-origins-changes-4-0
 OUTER_WORLD_PORT = os.environ.get("OUTER_WORLD_PORT")
 CSRF_TRUSTED_ORIGINS = [
-    f"http://{host}{f':{OUTER_WORLD_PORT}' if OUTER_WORLD_PORT else None}"
+    f"http://{host}{f':{OUTER_WORLD_PORT}' if OUTER_WORLD_PORT not in ('80','443') else None}"
     for host in ALLOWED_HOSTS
 ]
 
