@@ -33,11 +33,11 @@ ENV PYTHONUNBUFFERED 1
 ENV STATICFILES_DIR=${CODE_DIR}/staticfiles
 
 COPY ./backend ./app
+RUN mkdir staticfiles
 
-RUN addgroup -S ${UGROUP} && adduser -S ${USER} -G ${UGROUP} && chown -R ${USER}:${UGROUP} ${CODE_DIR}/app
+RUN addgroup -S ${UGROUP} && adduser -S ${USER} -G ${UGROUP} && chown -R ${USER}:${UGROUP} ${CODE_DIR}/app && chown -R ${USER}:${UGROUP} ${CODE_DIR}/staticfiles
 USER ${USER}
 
-RUN mkdir staticfiles
 WORKDIR ${CODE_DIR}/app
 
 # entry point used for DB and other services to boot up
