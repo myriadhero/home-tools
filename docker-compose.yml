@@ -1,7 +1,7 @@
 services:
   web:
+    restart: always
     build:
-      restart: always
       context: ./
       dockerfile: ./backend/Dockerfile
       args:
