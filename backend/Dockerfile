@@ -34,7 +34,7 @@ ENV STATICFILES_DIR=${CODE_DIR}/staticfiles
 
 COPY ./backend ./app
 
-RUN mkdir staticfiles && addgroup -S ${UGROUP} && adduser -S ${USER} -G ${UGROUP} && chown -R ${USER}:${UGROUP} ${CODE_DIR}/app && chown -R ${USER}:${UGROUP} ${CODE_DIR}/staticfiles
+RUN mkdir staticfiles && addgroup -S ${UGROUP} && adduser -S ${USER} -G ${UGROUP} && chown -R ${USER}:${UGROUP} ${CODE_DIR}/app && chown -R ${USER}:${UGROUP} ${CODE_DIR}/staticfiles && chown -R ${USER}:${UGROUP} ${CODE_DIR}/app/database
 USER ${USER}
 
 WORKDIR ${CODE_DIR}/app
