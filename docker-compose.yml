@@ -1,6 +1,7 @@
 services:
   web:
     build:
+      restart: always
       context: ./
       dockerfile: ./backend/Dockerfile
       args:
@@ -16,6 +17,7 @@ services:
     env_file:
       - .env.django_prod
   nginx:
+    restart: always
     build: ./nginx
     ports:
       - ${DOCKER_WORLD_PORT}:8080
