@@ -33,7 +33,7 @@ ENV PYTHONUNBUFFERED 1
 ENV STATICFILES_DIR=${CODE_DIR}/staticfiles
 
 COPY ./backend ./app
-RUN mkdir staticfiles
+RUN mkdir staticfiles && mkdir app/database
 
 RUN addgroup -S ${UGROUP} && adduser -S ${USER} -G ${UGROUP} && chown -R ${USER}:${UGROUP} ${CODE_DIR}/app && chown -R ${USER}:${UGROUP} ${CODE_DIR}/staticfiles
 USER ${USER}
